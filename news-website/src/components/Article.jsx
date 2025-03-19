@@ -1,39 +1,32 @@
+import React, { useState } from 'react';
 import './Article.css';
-import {useState} from 'react';
-
 
 function Article(props) {
+    const [clickCount, setClickCount] = useState(0);
+    const [liked, setLiked] = useState(false);
 
-    const [clickCount, setClickCount] = useState(0)
-    const [liked, setLiked] = useState(false)
+    const handleButtonClick = (event) => {
+        event.stopPropagation();
+        setLiked(prevLiked => !prevLiked);
+    };
 
-
-    // Function to increment count
-    // function incrementCount(prevCount) {
-    //     return prevCount + 1;
-    // }
-
-    // // Click handler function
-    // function handleArticleClick() {
-    //     setClickCount(incrementCount);
-    // }
-
-    const handleButtonClick = () => {
-        setLiked(prevLiked => !prevLiked) 
-    }
-    
     const handleArticleClickCount = () => {
-        setClickCount(prevCount => prevCount + 1)
-    }
-    
+        setClickCount(prevCount => prevCount + 1);
+    };
+
     return (
-        <article className={`article ${liked ? 'liked' : ' '}`  } onClick={handleArticleClickCount}>
+        <article className={`article ${liked ? 'liked' : ''}`} onClick={handleArticleClickCount}>
             <h2>{props.title}</h2>
             <p>{props.content}</p>
             <p>This article was clicked {clickCount} times!</p>
             <button onClick={handleButtonClick}>
-                {liked ? 'Unlike': 'Like'}
+                {liked ? 'Unlike' : 'Like'}
             </button>
+            {props.onEdit && (
+                <button onClick={(e) => { e.stopPropagation(); props.onEdit(); }}>
+                    Edit
+                </button>
+            )}
         </article>
     );
 }
