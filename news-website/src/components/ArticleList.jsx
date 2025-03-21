@@ -50,6 +50,7 @@ function ArticleList() {
 
       // Function to update an existing article via PUT request
     const handleUpdateArticle = (updatedArticle) => {
+        console.log(updatedArticle)
         fetch(`http://127.0.0.1:8000/api/articles/${updatedArticle.id}/`, {
         method: 'PUT',
         headers: {
@@ -66,6 +67,26 @@ function ArticleList() {
         })
         .catch(error => console.error('Error updating article:', error));
     };
+
+        // Function to update an existing article via PUT request
+    const handleDeleteArticle = (deletedArticle) => {
+        console.log(deletedArticle)
+        fetch(`http://127.0.0.1:8000/api/articles/${deletedArticle}/`, {
+        method: 'delete'
+        })
+        .then(response => {
+            if (response.ok) {
+                setArticles(prevArticles =>
+                    prevArticles.filter(article => article.id != deletedArticle)
+                );
+            }
+            else {
+                throw new Error ("Failed to delete article!")
+            }
+        })
+        .catch(error => console.error('Error deleting article:', error));
+    }
+
 
     if (loading) return <p>Loading articles...</p>
     if (error) return <p>{error}</p>
@@ -86,7 +107,7 @@ function ArticleList() {
             )}
             {
                 articles.map((article, index) => (
-                    <Article key={index} title={article.title} content={article.content} onEdit={() => setEditArticle(article)}/>
+                    <Article id={article.id} key={index} title={article.title} content={article.content} onEdit={() => setEditArticle(article)} onDelete={handleDeleteArticle}/>
                 ))
             }
         </div>

@@ -1,5 +1,6 @@
 import './Article.css';
 import {useState} from 'react';
+import { Link } from 'react-router-dom'
 
 
 function Article(props) {
@@ -37,6 +38,12 @@ function Article(props) {
                 {liked ? 'Unlike': 'Like'}
             </button>
             {props.onEdit && <button onClick={props.onEdit}>Edit</button>}
+            <Link to={`/articles/${props.id}`} className="read-more-link">
+                Read More
+            </Link>
+            <button onClick={() => props.onDelete(props.id)}>
+               Delete
+            </button>
         </article>
     );
 }
