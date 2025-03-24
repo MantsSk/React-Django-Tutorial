@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 
 function Article(props) {
 
-    const [clickCount, setClickCount] = useState(0)
     const [liked, setLiked] = useState(false)
 
     console.log({props})
@@ -24,16 +23,12 @@ function Article(props) {
     const handleButtonClick = () => {
         setLiked(prevLiked => !prevLiked) 
     }
-    
-    const handleArticleClickCount = () => {
-        setClickCount(prevCount => prevCount + 1)
-    }
+
     
     return (
-        <article className={`article ${liked ? 'liked' : ' '}`  } onClick={handleArticleClickCount}>
+        <article className={`article ${liked ? 'liked' : ' '}`  }>
             <h2>{props.title}</h2>
             <p>{props.content}</p>
-            <p>This article was clicked {clickCount} times!</p>
             <button onClick={handleButtonClick}>
                 {liked ? 'Unlike': 'Like'}
             </button>
